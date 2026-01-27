@@ -1,0 +1,3 @@
+__pycache__/
+crud_redis_env/
+api/migrations/__pycache__/
