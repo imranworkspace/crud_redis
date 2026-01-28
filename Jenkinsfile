@@ -1,38 +1,49 @@
-pipeline{
+pipeline {
     agent any
+
     environment {
-        COMPOSE_PROJECT_NAME  = 'crud_redis_jen'
+        COMPOSE_PROJECT_NAME = "crud_redis_jen"
     }
 
-    stages{
-        stage("checkout code"){
-            steps{
-                git branch: 'master',
-                url: 'https://github.com/imranworkspace/crud_redis'
+    stages {
+
+        stage('Checkout Code') {
+            steps {
+                git branch: 'main',
+                    url: 'https://github.com/imranworkspace/crud_redis.git'
             }
         }
-        stage("Build & Deploy"){
-            steps{
+
+        stage('Build & Deploy') {
+            steps {
                 sh """
-                    docker compose down
-                    docker compose build 
-                    docker compose up -d
+                docker-compose down
+                docker-compose build
+                docker-compose up -d
                 """
             }
         }
-        stage("Run Migration"){
-            steps{
-                sh """ docker compose exec web python manage.py migrate """
+
+        stage('Run Migrations') {
+            steps {
+                sh """
+                docker-compose exec web python manage.py migrate
+                """
+            }
+        }
+
+        stage('Collect Static') {
+            steps {
+                sh """
+                docker-compose exec web python manage.py collectstatic --noinput
+                """
             }
         }
     }
-    post{
-        success{
-            echo "django docker deployment successfully"
-        }
-        error{
-            echo "failed docker deployment"
+
+    post {
+        success {
+            echo "🚀 Django deployed via Docker Compose"
         }
     }
-
 }
