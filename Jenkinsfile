@@ -17,7 +17,7 @@ pipeline {
 
         stage('Build & Deploy') {
             steps {
-                sh """
+                bat """
                 docker-compose down
                 docker-compose build
                 docker-compose up -d
@@ -27,7 +27,7 @@ pipeline {
 
         stage('Run Migrations') {
             steps {
-                sh """
+                bat """
                 docker-compose exec web python manage.py migrate
                 """
             }
@@ -35,7 +35,7 @@ pipeline {
 
         // stage('Collect Static') {
         //     steps {
-        //         sh """
+        //         bat """
         //         docker-compose exec web python manage.py collectstatic --noinput
         //         """
         //     }
