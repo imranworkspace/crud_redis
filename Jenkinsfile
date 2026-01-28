@@ -9,7 +9,8 @@ pipeline {
 
         stage('Checkout Code') {
             steps {
-                git branch: 'main',
+                git branch: 'master',
+                credentialsId: 'fbc4daee-0fc0-4128-a7f4-ce51af0029dc',
                     url: 'https://github.com/imranworkspace/crud_redis.git'
             }
         }
@@ -32,13 +33,13 @@ pipeline {
             }
         }
 
-        stage('Collect Static') {
-            steps {
-                sh """
-                docker-compose exec web python manage.py collectstatic --noinput
-                """
-            }
-        }
+        // stage('Collect Static') {
+        //     steps {
+        //         sh """
+        //         docker-compose exec web python manage.py collectstatic --noinput
+        //         """
+        //     }
+        // }
     }
 
     post {
