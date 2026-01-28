@@ -10,7 +10,7 @@ pipeline {
         stage('Checkout Code') {
             steps {
                 git branch: 'master',
-                credentialsId: 'fbc4daee-0fc0-4128-a7f4-ce51af0029dc',
+                credentialsId: 'fbc4daee-0fc0-4128-a7f4-ce51af0029dc', // docker username and password - imrandocker3656 and my pass
                     url: 'https://github.com/imranworkspace/crud_redis.git'
             }
         }
